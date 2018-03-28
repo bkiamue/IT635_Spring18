@@ -1,0 +1,46 @@
+<?php
+
+//First we start a session
+session_start();
+
+//We then check if the user has clicked the login button
+if (isset($_POST['submit'])) {
+
+	//Then we include the database connection
+	include_once 'dbh.inc.php';
+	//And we get the data from the login form
+	$uid = $_POST['username'];
+	$pwd = $_POST['password'];
+
+	//Error handlers
+	//Error handlers are important to avoid any mistakes the user might have made when filling out the form!
+	//Check if inputs are empty
+	if (empty($uid) || empty($pwd)) {
+		header("Location: ../index.php?login=empty");
+		exit();
+	}
+	else {
+		
+		$hashedpwd=password_hash($pwd,PASSWORD_DEFAULT);
+		//Check if username exists in the database USING PREPARED STATEMENTS
+		$sql = "SELECT * FROM employee WHERE username='$uid',password='$hashedpwd';";
+		$row = $conn->query($sql);
+		If (!empty($row)) 
+		{
+
+			$result = $row->fetch_assoc();
+			$_SESSION['employee_id'] = $result['employee_id'];
+			$_SESSION['department'] = $result['department'];
+			// $_SESSION['employee_id'] = $row['employee_id'];
+			// $_SESSION['employee_id'] = $row['employee_id'];
+
+			header("location: ../index.php?login=success");
+			exit();
+		}else{
+
+			header("Location: ../index.php?credential=invalid");
+			exit ();
+		}
+	}
+}
+?>
