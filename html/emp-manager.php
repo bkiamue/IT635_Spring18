@@ -2,19 +2,19 @@
 <html>
 <body>
 
-<h1> Assigned employee to manager </h1>
+<h1> Employee Manager Controll </h1>
 
-<form action="./manager_submit.php" method="POST">
+<form action="./employee_doc_submit.php" method="POST">
 
-<label for "manager"> Manager </label>
+<label for "manager">Manager</label>
 
 
-<select name='manager' id="manager">
+<select name='M' id="emp">
 
 <?php
 $link = mysqli_connect("localhost", "root", "0210Betania@", "it635");
-$sql = "select employee_id, firstname, lastname from employee where role = 'manager';";
 
+$sql = "select employee_id, firstname, lastname from employee where role = 'manager';";
 $row = $link->query($sql);
 
 while ($result=$row->fetch_assoc()){

@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.21, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.22, for Linux (x86_64)
 --
 -- Host: localhost    Database: it635
 -- ------------------------------------------------------
--- Server version	5.7.21-0ubuntu0.16.04.1
+-- Server version	5.7.22-0ubuntu0.16.04.1-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,6 +14,12 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Position to start replication or point-in-time recovery from
+--
+
+-- CHANGE MASTER TO MASTER_LOG_FILE='mysql-bin.000004', MASTER_LOG_POS=154;
 
 --
 -- Current Database: `it635`
@@ -67,7 +73,7 @@ CREATE TABLE `document` (
   PRIMARY KEY (`doc_id`),
   KEY `employee_id` (`employee_id`),
   CONSTRAINT `document_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -76,7 +82,7 @@ CREATE TABLE `document` (
 
 LOCK TABLES `document` WRITE;
 /*!40000 ALTER TABLE `document` DISABLE KEYS */;
-INSERT INTO `document` VALUES (1,'02_29_18','legal','central street',1),(2,'02_29_18','administration','main street',2),(3,'02_29_18','human resource','gurley street',3),(4,'02_29_18','police','buck street',4),(5,'02_29_18','driver','front street',3),(6,'03_05_18','Section 8','water street',6),(7,'03_05_18','Section 8','water street',6),(8,'03_05_18','Taxi','water street',5),(9,'03_06_18','test','water street',2);
+INSERT INTO `document` VALUES (1,'02_29_18','legal','central street',1),(2,'02_29_18','administration','main street',2),(3,'02_29_18','human resource','gurley street',3),(4,'02_29_18','police','buck street',4),(5,'02_29_18','driver','front street',3),(6,'03_05_18','Section 8','water street',6),(7,'03_05_18','Section 8','water street',6),(8,'03_05_18','Taxi','water street',5),(9,'03_06_18','test','water street',2),(10,'2018-03-08','w','wep',22),(11,'02/17/2018','This is a test','5',28),(12,'02/01/2018','Police','5',29);
 /*!40000 ALTER TABLE `document` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -95,10 +101,13 @@ CREATE TABLE `employee` (
   `department` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(256) NOT NULL,
+  `role` varchar(25) DEFAULT NULL,
+  `session` varchar(255) DEFAULT NULL,
+  `session_expiration` datetime NOT NULL DEFAULT '1970-01-01 12:00:00',
   PRIMARY KEY (`employee_id`),
   KEY `department` (`department`),
   CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`department`) REFERENCES `department` (`department_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -107,7 +116,7 @@ CREATE TABLE `employee` (
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES (1,'JOHN','SMITH','USER1@EMAIL.COM',1,'jsmith','jsmith'),(2,'PETER','STEAK','PSTEAK@EMAIL.COM',2,'psteak','psteak'),(3,'TRENT','TUCKER','TTUCKER@EMAIL.COM',3,'ttucker','ttucker'),(4,'BUSH','MAN','BMAN@EMAIL.COM',4,'bman','bman'),(5,'BRENT','BURNER','BBURNER@EMAIL.COM',5,'bburner','bburner'),(6,'DUD','CHRIS','CDUD@EMAIL.COM',6,'cdud','cdud');
+INSERT INTO `employee` VALUES (1,'JOHN','SMITH','USER1@EMAIL.COM',1,'jsmith','jsmith','manager',NULL,'1970-01-01 12:00:00'),(2,'PETER','STEAK','PSTEAK@EMAIL.COM',2,'psteak','psteak','manager',NULL,'1970-01-01 12:00:00'),(3,'TRENT','TUCKER','TTUCKER@EMAIL.COM',3,'ttucker','ttucker','manager',NULL,'1970-01-01 12:00:00'),(4,'BUSH','MAN','BMAN@EMAIL.COM',4,'bman','bman','manager',NULL,'1970-01-01 12:00:00'),(5,'BRENT','BURNER','BBURNER@EMAIL.COM',1,'bburner','bburner',NULL,NULL,'1970-01-01 12:00:00'),(6,'DUD','CHRIS','CDUD@EMAIL.COM',2,'cdud','cdud',NULL,NULL,'1970-01-01 12:00:00'),(11,'Peter','Palet','ppalet@made.com',2,'ppalet','ppalet',NULL,NULL,'1970-01-01 12:00:00'),(12,'Christine','Trump','ctrump@screw.com',2,'ctrump','ctrump',NULL,NULL,'1970-01-01 12:00:00'),(13,'Paul','Crump','pcrump@mad.com',2,'pcrump','pcrump',NULL,NULL,'1970-01-01 12:00:00'),(14,'Paul','Crump','pcrump@mad.com',4,'pcrump','pcrump',NULL,NULL,'1970-01-01 12:00:00'),(15,'Sal','Crook','scrook@darn.com',3,'scrook','scrook',NULL,NULL,'1970-01-01 12:00:00'),(16,'Ras','Bread','rbread@creep.com',5,'rbread','rbread',NULL,NULL,'1970-01-01 12:00:00'),(17,'Sara','Crump','scrump@made.com',5,'scrump','scrump',NULL,NULL,'1970-01-01 12:00:00'),(18,'Donald','Goat','dgoat@smad.com',2,'dgoat','dgoat',NULL,NULL,'1970-01-01 12:00:00'),(19,'Richard','Ball','rball@made.com',3,'rball','rball',NULL,NULL,'1970-01-01 12:00:00'),(20,'Grin','Grit','ggrit@mader.com',1,'ggrit','ggrit',NULL,NULL,'1970-01-01 12:00:00'),(22,'Jessica','Ross','jross@pkh.com',1,'jross','jross',NULL,NULL,'1970-01-01 12:00:00'),(24,'B','Kiamue','bsk26@njit.edu',1,'bkiamue','',NULL,NULL,'1970-01-01 12:00:00'),(25,'T','Crump','trcump@dd.com',3,'tcrump','$2y$10$TZ35y37ZUVylq7kPI0Jj.uZtyG3QlwDwMTVt07YQ3uQHcWsPqc0NW',NULL,'tcrump','2018-03-28 04:42:35'),(26,'Daniel','Rope','drope@drope.com',5,'drope','$2y$10$h5Jy85PIn76jPFyLdbd7ue4MQkQ0Z/IR1x4.et086lziDzBMKTyIG',NULL,'drope','2018-03-28 07:20:21'),(27,'Tom','Biskett','tbiskett@vert.com',2,'tbiskett','$2y$10$TwZ7bC4hkrOu4FNN4zD8uegX5i3bFNWrDTTA2mSL0CqNrnzD73rlu',NULL,NULL,'1970-01-01 12:00:00'),(28,'Ben','Theman','btheman@tren.com',4,'btheman','$2y$10$hyMFznVP4grCfDzynEwz2.Qu1TM2H2cUtFSqT4ksONXS8NLLOeRHe',NULL,'btheman','2018-04-06 03:02:52'),(29,'b','Drump','bdrump@gt.com',2,'bdrump','$2y$10$YrPJmOvB14.dOPxAHDtQW.iPXftikh4UfjcbsKO3NQmN/G8zv2Gxy',NULL,'bdrump','2018-04-11 23:59:22'),(30,'K','Choudhury','kchoudhury@nj.org',3,'kc','$2y$10$cIhxtB1/oUpHhv6kmIbe6u0JD7xqndmYPCluOwl4kTPPuxAAiowhm',NULL,'kc','2018-04-20 03:24:24'),(31,'D','Prump','dprump@ladies.com',3,'dprump','$2y$10$hnIiqEh.FRXduyEn4Eo3y./HdIl8zRb1CTJw8sMdmNBCNJ3GIMOVe',NULL,'dprump','2018-05-06 22:23:50'),(32,'D','Prump','dprump@l.com',2,'dprump','$2y$10$vlzM1Vz4We4yyxae/njF4.BMdwYq5fbiVZ9qp5DPyiMJkkPR7v9i.',NULL,'dprump','2018-05-06 22:23:50'),(33,'Gerry','Stump','gstump@stump.com',3,'gstump','$2y$10$8QTbkzCN8S3/asDVNxLAsu/wPZmND8.ipgoc9QznvjUBny4/RpaW.',NULL,NULL,'1970-01-01 12:00:00');
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,4 +156,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-07  1:01:38
+-- Dump completed on 2018-05-09 21:30:04

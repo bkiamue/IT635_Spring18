@@ -1,18 +1,4 @@
 <?php
-      include_once 'header.php'
-?>
-
-<section class = "main-container">
-    <div class="main-wrapper">
-    <h2>Document Submitted</h2>
-
-<br><br>
-
-
-<center>
-<?php
-
-
 Session_start();
  
 if (isset($_POST['date'] )) 
@@ -46,13 +32,21 @@ exit();
 }
  ?>
 
-<form action = "doc_submit.php" method="post">
+<h1>Document Based On Employee</h1>
+
+<form action = "doc_submit.php">
 
 <label for "date"> Date Created </label>
 <input type = text name = "date" required
       autofocus atocomplete - "off"
       placeholder = "Date Created"
       id = "date"<br></br>
+
+<label for "description"> Description </label>
+<input type = text name = "description" required
+            autofocus autocomplete = "off"
+            placeholder = "Date created"
+            id = "date"<br></br>
 
 <label for "description"> Description </label>
 <input type = text name = "description" required
@@ -71,6 +65,6 @@ exit();
 </form>
 
            
-</center>
+
 
 

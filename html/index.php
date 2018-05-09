@@ -16,7 +16,9 @@
 <?php
 	include_once 'footer.php';
 ?>
- <!DOCTYPE html>
+<center> 
+
+<!DOCTYPE html>
  <html>
  <head>
  <title>Menu Option</title>
@@ -59,13 +61,12 @@
 
      <h1>Navigation Menu</h1>
      <ul id="navmenu">
-         <li><a href="employeemain.html">Employees</a></li>
-         <li><a href="manager.php">Managers</a></li>
-         <li><a href="emp-manager.php">Employees to Managers</a></li>
-         <li><a href="doc-manager.php">Documents by Managers</a></li>
-         <li><a href="doc-date.php">Documents by Date</a></li>
-         <li><a href="doc-department.php">Documents by Depatments</a></li> 
-         <li><a href="doc-search.php">Search Documents from Others</a></li>
+         <a href="manager.php">Assigned Employees to Managers</a>
+         <a href="employee_doc_submit.php">Submitted Documents</a>
+         <a href="doc_owned_manager.php">Documents Managed By Manager</a>
+         <a href="doc_search.php">Search Documents from Others</a>
      </ul>
      </body>
    </html>
+
+</center>

@@ -1,20 +1,39 @@
 <?php
 
-($dbh = mysql_connect("localhost", "root", "0210Betania@")) or die ("Unable to connect to MySQL database.");
+Session_start();
+ 
+if (isset($_POST['location'] )) 
 
-mysql_select_db("it635");
+{
 
-$date = $_REQUEST ["date"];
-$date = mysql_real_escape_string ($date);
-$description = $_REQUEST ["description"];
-$description = mysql_real_escape_string ($description);
-$location = $_REQUEST ["location"];
-$location = mysql_real_escape_string ($location);
+$date = $_POST['date'];
+$description = $_POST['description'];
+$location = $_POST['location'];
+$employee_id = $_SESSION['employee_id'];
 
-$docSubmitted = "INSERT INTO document (date_created, description, doc_location, employee_id) VALUES ('$date', '$description', '$location', '2')";
 
-($query = mysql_query($docSubmit)) or die (mysql_error());
+/*$link = mysqli_connect("localhost", "root", "0210Betania@", "it635");
+$sql = " insert into document (date_created, description, doc_location, employee_id) values ('$date', '$description', '$location', $employee_id);"; 
 
-echo $query;
+$row = $link->query($sql);
+*/
+require_once '/var/www/html/vendor/autoload.php';
+$conn = new MongoDB\Client("mongodb://jcraze:jcraze@ds243049.mlab.com:43049/it635");
 
-?>
+$client = $conn->it635->document;
+$row = $client->insertOne( [ "date" => "$date" , "description" => "$description", "location" => "$location", "employee_id" => "$employee_id" ] );
+if (!$row)
+{
+header('Location: ./employee_doc_submit.php?submit=error');
+exit();
+
+
+}
+else {
+header('Location: ./employee_doc_submit.php?submit=success');
+exit();
+
+}
+}
+ ?>
+

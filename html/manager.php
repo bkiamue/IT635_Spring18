@@ -1,10 +1,17 @@
-<!DOCTYPE html>
+<?php
+
+    include_once 'header.php'
+
+?>
+
+<section class = "main-container">
+        <div class="main-wrapper">
+             <h2>Assigned Employee to Manager</h2>
+<br><br>
 
 <html>
 <body>
-
-<h1> Assigned employee to manager </h1>
-
+<center>
 <form action="./manager_submit.php" method="POST">
 
 <label for "manager"> Manager </label>
@@ -67,7 +74,12 @@ echo '<option value="'.$employee_id.'">'.$firstname.' '.$lastname.'</option>';
 <input type="submit" value="Submit">
 
 </form>
-
+</center>
 </body>
 </html>
+</section>
 
+<?php
+    include_once 'footer.php';
+
+?>
